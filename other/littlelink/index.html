@@ -51,5 +51,59 @@
 
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/appwrite@17.0.0"></script>
+
+<script>
+    const client = new Appwrite.Client();
+
+    client
+        .setEndpoint("https://fra.cloud.appwrite.io/v1")
+        .setProject("6ab8fd4a0019a5d8217b");
+
+    const account = new Appwrite.Account(client);
+
+    const params =
+        new URLSearchParams(window.location.search);
+
+    const userId =
+        params.get("userId");
+
+    const secret =
+        params.get("secret");
+
+    const message =
+        document.getElementById("message");
+
+    if (!userId || !secret) {
+
+        message.textContent =
+            "This verification link is invalid or incomplete.";
+
+    } else {
+
+        message.textContent =
+            "Verifying your email...";
+
+        account
+            .updateVerification({
+                userId: userId,
+                secret: secret
+            })
+            .then(() => {
+
+                message.textContent =
+                    "Your email has been verified successfully.";
+
+            })
+            .catch(error => {
+
+                message.textContent =
+                    error.message ||
+                    "Unable to verify your email.";
+
+            });
+    }
+</script>
+
 </body>
 </html>
