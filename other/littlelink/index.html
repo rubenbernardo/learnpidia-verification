@@ -85,10 +85,10 @@
             "Verifying your email...";
 
         account
-            .updateVerification({
-                userId: userId,
-                secret: secret
-            })
+            .updateVerification(
+                userId,
+                secret
+            )
             .then(() => {
 
                 message.textContent =
